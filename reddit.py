@@ -16,7 +16,7 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id="fe523ddd3e48476590d0c8
                                                redirect_uri="http://localhost:8888/callback",
                                                scope="playlist-read-private playlist-modify-private"))
 
-# FUNCTIONSfuyhjjhkkj
+# FUNCTIONS
 def add_songs(pl_id, songs):
     id_list = []
     for index in range(len(songs)):
