@@ -35,25 +35,21 @@ def add_songs(pl_id, songs):
         # if artist name 'the'
         # if song already in list
         result = sp.search(search_term, limit=1, offset=0, type='track', market=None)
-        print(search_term)
-        print(result)
         if result['tracks']['total'] > 0:
             id_list.append(result['tracks']['items'][0]['id'])
     sp.playlist_add_items(pl_id, id_list, position=None)
 
 def make_playlist(submission, songs):
+    print("!!!")
     if songs:
         pls = sp.current_user_playlists(limit=50, offset=0)
         pl_found = False
+        new_pl = {"id": ""}
         for pl in pls['items']:
             if pl['name'] == submission.title:
-                pl_found = True
-        new_pl = {"id": ""}
-        if not pl_found:
-            new_pl = sp.user_playlist_create("u95rrsg6w74lnq922m253zd5o", submission.title, False, False, "https://www.reddit.com" + submission.permalink)
-            add_songs(new_pl['id'], songs)
-        else:
-            add_songs(new_pl['id'], songs)
+                sp.current_user_unfollow_playlist(pl['id'])
+        new_pl = sp.user_playlist_create("u95rrsg6w74lnq922m253zd5o", submission.title, False, False, "https://www.reddit.com" + submission.permalink)
+        add_songs(new_pl['id'], songs)
 
 def find_songs (submission):
     songs = []
@@ -65,10 +61,10 @@ def find_songs (submission):
     print(songs)
     make_playlist(submission, songs)
 
-post = reddit.submission(id='r6spqd')
+post = reddit.submission(id='twfxhm')
 print(post.title)
-for comment in post.comments[:1000]:
-    print(comment.body, '\n')
+# for comment in post.comments[:1000]:
+    # print(comment.body, '\n')
     # print("( \" ", comment.body, "\" \n {\"entities\": , , LABEL})")
 find_songs(post)
 
