@@ -8,8 +8,7 @@ from spotipy.oauth2 import SpotifyOAuth
 reddit = praw.Reddit(
     client_id="1d4KhVfd5JlCuf6KPVXLdQ",
     client_secret="px2jh-SCDIhYN2md1RHqHf_dclSy5g",
-    user_agent="spotify:tbc:v1.2.3 (by /u/barelylyndving)",
-)
+    user_agent="spotify:tbc:v1.2.3 (by /u/barelylyndving)",)
 
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id="fe523ddd3e48476590d0c807b42c2e22",
                                                client_secret="b82056b0fe45466cac6066c0eb5fd0f6",
@@ -57,11 +56,20 @@ def find_songs (submission):
     make_playlist(submission, songs)
 
 post = reddit.submission(id='tv90ah')
-print(post.title)
+
+def find_ID(url):
+    if "/comments/" in url:
+        ID = url.split('/comments/')
+        if "/" in ID[1]:
+            ID = ID[1].split('/')
+            return ID[0]
+
+
+# print(post.title)
 # for comment in post.comments[:1000]:
     # print(comment.body, '\n')
     # print("( \" ", comment.body, "\" \n {\"entities\": , , LABEL})")
-find_songs(post)
+# find_songs(post)
 
 
 # MAIN
