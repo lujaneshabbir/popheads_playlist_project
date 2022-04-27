@@ -16,17 +16,24 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id="fe523ddd3e48476590d0c8
                                                scope="playlist-read-private playlist-modify-private"))
 
 # FUNCTIONS
+
+
+pl_created_url =''
+
+def display_url():
+    global pl_created_url
+    return pl_created_url
+
 def add_songs(pl_id, songs):
     id_list = []
     for index in range(len(songs)):
         if "https" not in songs[index]:
-            if "-" in songs[index]:
+            if " -" in songs[index]:
                 split = songs[index].split(' -')
-            elif "by" in songs[index]:
+            elif " by" in songs[index]:
                 split = songs[index].split(' by')
+        print(split)
         search_term = split[0] + split[1]
-        # if artist name 'the'
-        # if song already in list
         result = sp.search(search_term, limit=1, offset=0, type='track', market=None)
         if result['tracks']['total'] > 0:
             id_list.append(result['tracks']['items'][0]['id'])
@@ -43,33 +50,48 @@ def make_playlist(submission, songs):
             if pl['name'] == submission.title:
                 sp.current_user_unfollow_playlist(pl['id'])
         new_pl = sp.user_playlist_create("u95rrsg6w74lnq922m253zd5o", submission.title, False, False, "https://www.reddit.com" + submission.permalink)
+        global pl_created_url
+        pl_created_url = new_pl["external_urls"]['spotify']
         add_songs(new_pl['id'], songs)
 
 def find_songs (submission):
     songs = []
-    for comment in post.comments[:100]:
+    for comment in submission.comments[:100]:
         song_dash_artist = re.findall(r'[^ ]* - [^ ]*', comment.body, )
         songs = songs + song_dash_artist
         song_by_artist = re.findall(r'[^ ]* by [^ ]*', comment.body, )
         songs = songs + song_by_artist
-    print(songs)
+    # print(songs)
     make_playlist(submission, songs)
 
-post = reddit.submission(id='tv90ah')
+def get_post(post_id):
+    post = reddit.submission(id= post_id)
+    find_songs(post)
 
 def find_ID(url):
     if "/comments/" in url:
         ID = url.split('/comments/')
         if "/" in ID[1]:
             ID = ID[1].split('/')
-            return ID[0]
+    get_post(ID[0])
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # print(post.title)
 # for comment in post.comments[:1000]:
     # print(comment.body, '\n')
     # print("( \" ", comment.body, "\" \n {\"entities\": , , LABEL})")
-# find_songs(post)
 
 
 # MAIN
