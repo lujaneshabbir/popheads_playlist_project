@@ -10,4 +10,6 @@ Can be turned into playlists like this:
 
 https://open.spotify.com/playlist/3IHEh4m5R4TDnfv9hcmpzh?si=305522043d5f4e5d
 
+thats fun, right!
+
 
