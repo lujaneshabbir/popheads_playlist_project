@@ -2,10 +2,14 @@
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 
-sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id="fe523ddd3e48476590d0c807b42c2e22",
-                                               client_secret="b82056b0fe45466cac6066c0eb5fd0f6",
+id_spotify = os.environ['ID_SPOTIFY']
+secret_spotify = os.environ['SECRET_SPOTIFY']
+
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=id_spotify,
+                                               client_secret=secret_spotify,
                                                redirect_uri="http://localhost:8888/callback",
                                                scope="playlist-read-private playlist-modify-private"))
+
 pls = sp.current_user_playlists(limit=50, offset=0)
 for pl in pls['items']:
     print(pl['id'])

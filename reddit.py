@@ -2,22 +2,31 @@ import praw
 import re
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-# from spacy import spacy
+import os
+
+print(os.environ['ID_SPOTIFY'])
+print(os.environ['SECRET_SPOTIFY'])
+print(os.environ['AGENT_SPOTIFY'])
 
 # AUTHENTICATION
-reddit = praw.Reddit(
-    client_id="1d4KhVfd5JlCuf6KPVXLdQ",
-    client_secret="px2jh-SCDIhYN2md1RHqHf_dclSy5g",
-    user_agent="spotify:tbc:v1.2.3 (by /u/barelylyndving)",)
+id_reddit = os.environ['ID_REDDIT']
+secret_reddit = os.environ['SECRET_REDDIT']
+agent_reddit = os.environ['AGENT_REDDIT']
 
-sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id="fe523ddd3e48476590d0c807b42c2e22",
-                                               client_secret="b82056b0fe45466cac6066c0eb5fd0f6",
+reddit = praw.Reddit(
+    client_id= id_reddit,
+    client_secret= secret_reddit,
+    user_agent= agent_reddit)
+
+id_spotify = os.environ['ID_SPOTIFY']
+secret_spotify = os.environ['SECRET_SPOTIFY']
+
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=id_spotify,
+                                               client_secret=secret_spotify,
                                                redirect_uri="http://localhost:8888/callback",
                                                scope="playlist-read-private playlist-modify-private"))
 
 # FUNCTIONS
-
-
 pl_created_url =''
 
 def display_url():
@@ -61,7 +70,6 @@ def find_songs (submission):
         songs = songs + song_dash_artist
         song_by_artist = re.findall(r'[^ ]* by [^ ]*', comment.body, )
         songs = songs + song_by_artist
-    # print(songs)
     make_playlist(submission, songs)
 
 def get_post(post_id):
@@ -74,45 +82,3 @@ def find_ID(url):
         if "/" in ID[1]:
             ID = ID[1].split('/')
     get_post(ID[0])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# print(post.title)
-# for comment in post.comments[:1000]:
-    # print(comment.body, '\n')
-    # print("( \" ", comment.body, "\" \n {\"entities\": , , LABEL})")
-
-
-# MAIN
-# for submission in reddit.subreddit("popheads").top(limit=0):
-#     if submission.link_flair_text == "[DISCUSSION]":
-#         if submission.title.find("What songs sound Christmas-y or wintery even though that's not what they were going for?") != -1:
-#             print(submission.title, submission.link_flair_text)
-             # for comment in submission.comments[:10]:
-             #     print("( \" ", comment.body, "\" \n {\"entities\": , , LABEL})")
-# for submission in reddit.subreddit("popheads").top(limit=0):
-    # if submission.link_flair_text == "[DISCUSSION]":
-    #     songs = []
-    #     print(submission.title, submission.link_flair_text)
-    #     print('________________________________________')
-    #     submission.comments.replace_more(limit=0)
-        # for comment in submission.comments[:100]:
-        #     print("( \" ", comment.body, "\" \n {\"entities\": , , LABEL})")
-            # print("_____")
-            # songs_quote = re.findall(r'"(. *)"', comment.body);
-            # song_dash_artist = re.findall(r'[^ ]* - [^ ]*', comment.body, )
-            # songs = songs + song_dash_artist
-            # # song_by_artist = re.findall(r'[^ ]* by [^ ]*', comment.body, )
-            # songs = songs + song_by_artist
-        # print(songs)
