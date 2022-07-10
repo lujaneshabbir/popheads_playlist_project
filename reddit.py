@@ -4,10 +4,6 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 import os
 
-print(os.environ['ID_SPOTIFY'])
-print(os.environ['SECRET_SPOTIFY'])
-print(os.environ['AGENT_SPOTIFY'])
-
 # AUTHENTICATION
 id_reddit = os.environ['ID_REDDIT']
 secret_reddit = os.environ['SECRET_REDDIT']
@@ -17,6 +13,12 @@ reddit = praw.Reddit(
     client_id= id_reddit,
     client_secret= secret_reddit,
     user_agent= agent_reddit)
+
+
+print(os.environ['ID_SPOTIFY'])
+print(os.environ['SECRET_SPOTIFY'])
+print(os.environ['AGENT_SPOTIFY'])
+
 
 id_spotify = os.environ['ID_SPOTIFY']
 secret_spotify = os.environ['SECRET_SPOTIFY']
