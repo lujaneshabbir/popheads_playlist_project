@@ -2,5 +2,6 @@
 extras.py
 AI/training_data/*.csv
 AI/training_data/Song_db.py
-AI/training_data/__pycache__
+__pycache__
 AI/song.spacy
+.DS_Store
