@@ -16,9 +16,7 @@ thats fun, right!
 
 FLASK_APP=ui.py flask run
 
-Python modules
-
 spacy
-praw 
+praw
 
 ## How it works
